@@ -1,0 +1,128 @@
+{
+  "regions": {
+    "uganda": {
+      "currency": "USD",
+      "adjustmentFactor": 0.45,
+      "rates": {
+        "full-stack-web": {
+          "junior": { "min": 12, "max": 20 },
+          "mid": { "min": 20, "max": 35 },
+          "senior": { "min": 30, "max": 55 }
+        },
+        "mobile-development": {
+          "junior": { "min": 12, "max": 20 },
+          "mid": { "min": 22, "max": 38 },
+          "senior": { "min": 32, "max": 52 }
+        },
+        "ui-ux-design": {
+          "junior": { "min": 10, "max": 18 },
+          "mid": { "min": 18, "max": 30 },
+          "senior": { "min": 28, "max": 48 }
+        },
+        "data-analysis": {
+          "junior": { "min": 10, "max": 18 },
+          "mid": { "min": 18, "max": 32 },
+          "senior": { "min": 28, "max": 45 }
+        },
+        "graphic-design": {
+          "junior": { "min": 8, "max": 15 },
+          "mid": { "min": 15, "max": 25 },
+          "senior": { "min": 22, "max": 38 }
+        }
+      }
+    },
+    "kenya": {
+      "currency": "USD",
+      "adjustmentFactor": 0.50,
+      "rates": {
+        "full-stack-web": {
+          "junior": { "min": 15, "max": 22 },
+          "mid": { "min": 22, "max": 40 },
+          "senior": { "min": 35, "max": 60 }
+        },
+        "mobile-development": {
+          "junior": { "min": 14, "max": 22 },
+          "mid": { "min": 24, "max": 42 },
+          "senior": { "min": 36, "max": 58 }
+        },
+        "ui-ux-design": {
+          "junior": { "min": 12, "max": 20 },
+          "mid": { "min": 20, "max": 35 },
+          "senior": { "min": 30, "max": 50 }
+        },
+        "data-analysis": {
+          "junior": { "min": 12, "max": 20 },
+          "mid": { "min": 20, "max": 35 },
+          "senior": { "min": 30, "max": 48 }
+        },
+        "graphic-design": {
+          "junior": { "min": 10, "max": 18 },
+          "mid": { "min": 16, "max": 28 },
+          "senior": { "min": 24, "max": 40 }
+        }
+      }
+    },
+    "nigeria": {
+      "currency": "USD",
+      "adjustmentFactor": 0.48,
+      "rates": {
+        "full-stack-web": {
+          "junior": { "min": 12, "max": 20 },
+          "mid": { "min": 22, "max": 38 },
+          "senior": { "min": 33, "max": 55 }
+        },
+        "mobile-development": {
+          "junior": { "min": 13, "max": 20 },
+          "mid": { "min": 23, "max": 40 },
+          "senior": { "min": 35, "max": 55 }
+        },
+        "ui-ux-design": {
+          "junior": { "min": 10, "max": 18 },
+          "mid": { "min": 18, "max": 32 },
+          "senior": { "min": 28, "max": 48 }
+        },
+        "data-analysis": {
+          "junior": { "min": 10, "max": 18 },
+          "mid": { "min": 18, "max": 32 },
+          "senior": { "min": 28, "max": 45 }
+        },
+        "graphic-design": {
+          "junior": { "min": 8, "max": 15 },
+          "mid": { "min": 15, "max": 25 },
+          "senior": { "min": 22, "max": 38 }
+        }
+      }
+    },
+    "south-africa": {
+      "currency": "USD",
+      "adjustmentFactor": 0.60,
+      "rates": {
+        "full-stack-web": {
+          "junior": { "min": 18, "max": 28 },
+          "mid": { "min": 28, "max": 48 },
+          "senior": { "min": 45, "max": 75 }
+        },
+        "mobile-development": {
+          "junior": { "min": 18, "max": 28 },
+          "mid": { "min": 30, "max": 50 },
+          "senior": { "min": 45, "max": 72 }
+        },
+        "ui-ux-design": {
+          "junior": { "min": 15, "max": 25 },
+          "mid": { "min": 25, "max": 42 },
+          "senior": { "min": 38, "max": 65 }
+        },
+        "data-analysis": {
+          "junior": { "min": 15, "max": 25 },
+          "mid": { "min": 25, "max": 42 },
+          "senior": { "min": 38, "max": 60 }
+        },
+        "graphic-design": {
+          "junior": { "min": 12, "max": 22 },
+          "mid": { "min": 20, "max": 35 },
+          "senior": { "min": 30, "max": 50 }
+        }
+      }
+    }
+  }
+}

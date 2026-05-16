@@ -1,0 +1,83 @@
+[
+  {
+    "name": "Alice Mukasa",
+    "email": "alice.mukasa@example.com",
+    "role": "freelancer",
+    "skills": ["React", "Next.js", "Node.js", "TypeScript", "PostgreSQL", "Tailwind CSS"],
+    "yearsOfExperience": 5,
+    "seniority": "senior",
+    "notableProjects": [
+      "Built an e-commerce platform for a Kampala-based fashion brand with 10K monthly active users",
+      "Developed a real-time inventory management system for a logistics company in Nairobi"
+    ],
+    "region": "uganda",
+    "cvText": "Alice Mukasa — Senior Full-Stack Web Developer\n5 years experience in React, Next.js, Node.js, TypeScript.\nBuilt e-commerce platforms, inventory systems, and SaaS dashboards for East African businesses.",
+    "telegramChatId": "5367731807",
+    "hourlyRateMin": 30,
+    "hourlyRateMax": 50
+  },
+  {
+    "name": "David Kamau",
+    "email": "david.kamau@example.com",
+    "role": "freelancer",
+    "skills": ["React Native", "Flutter", "Dart", "TypeScript", "Firebase", "REST APIs"],
+    "yearsOfExperience": 3,
+    "seniority": "mid",
+    "notableProjects": [
+      "Built a mobile money integration app for M-Pesa and MTN Mobile Money used by 5K users",
+      "Developed a delivery tracking app for a Nairobi-based food delivery startup"
+    ],
+    "region": "kenya",
+    "cvText": "David Kamau — Mid-Level Mobile Developer\n3 years building cross-platform mobile apps with React Native and Flutter.\nSpecialised in mobile money integrations and delivery tracking systems.",
+    "hourlyRateMin": 25,
+    "hourlyRateMax": 40
+  },
+  {
+    "name": "Amara Okonkwo",
+    "email": "amara.okonkwo@example.com",
+    "role": "freelancer",
+    "skills": ["Figma", "Adobe XD", "User Research", "Prototyping", "Design Systems", "Accessibility"],
+    "yearsOfExperience": 4,
+    "seniority": "senior",
+    "notableProjects": [
+      "Designed the full UX for a fintech app serving 50K users across West Africa",
+      "Created a design system adopted by three product teams at a Lagos tech company"
+    ],
+    "region": "nigeria",
+    "cvText": "Amara Okonkwo — Senior UI/UX Designer\n4 years designing mobile and web products for African fintech and healthtech startups.\nExpert in Figma, user research, and accessible design systems.",
+    "hourlyRateMin": 28,
+    "hourlyRateMax": 45
+  },
+  {
+    "name": "Grace Nalubega",
+    "email": "grace.nalubega@example.com",
+    "role": "freelancer",
+    "skills": ["Python", "Pandas", "SQL", "Tableau", "Power BI", "Machine Learning", "Data Visualization"],
+    "yearsOfExperience": 2,
+    "seniority": "junior",
+    "notableProjects": [
+      "Built a sales forecasting model for a Ugandan retail chain reducing stockouts by 30%",
+      "Created a data dashboard tracking COVID-19 vaccination rates across East African districts"
+    ],
+    "region": "uganda",
+    "cvText": "Grace Nalubega — Junior Data Analyst\n2 years experience in Python, SQL, and data visualization.\nBuilt forecasting models and dashboards for healthcare and retail sectors.",
+    "hourlyRateMin": 18,
+    "hourlyRateMax": 30
+  },
+  {
+    "name": "Samuel Osei",
+    "email": "samuel.osei@example.com",
+    "role": "freelancer",
+    "skills": ["Adobe Illustrator", "Photoshop", "Brand Identity", "Typography", "Print Design", "Social Media Graphics"],
+    "yearsOfExperience": 6,
+    "seniority": "senior",
+    "notableProjects": [
+      "Designed brand identity for a pan-African fintech startup from logo to full brand guidelines",
+      "Created marketing materials for a UNICEF youth empowerment campaign across 5 countries"
+    ],
+    "region": "kenya",
+    "cvText": "Samuel Osei — Senior Graphic Designer\n6 years creating brand identities, marketing collateral, and digital assets for African businesses and NGOs.\nSpecialised in brand identity and print design.",
+    "hourlyRateMin": 25,
+    "hourlyRateMax": 40
+  }
+]

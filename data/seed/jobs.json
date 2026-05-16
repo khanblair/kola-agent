@@ -1,0 +1,17 @@
+[
+  {
+    "briefText": "We need a logistics platform similar to Uber for last-mile delivery in Kampala. The app should integrate MTN Mobile Money and Airtel Money for payments. We need a customer-facing mobile app, a driver app, and an admin dashboard. Real-time GPS tracking, order management, and automated dispatch. Timeline: 12 weeks. Budget is flexible but we want competitive African market rates.",
+    "region": "uganda",
+    "status": "published"
+  },
+  {
+    "briefText": "Looking for a UI/UX designer to redesign our fintech mobile app. The current app has poor user retention and we suspect the onboarding flow is too complex. Need user research, wireframes, high-fidelity mockups, and a clickable prototype. The app serves small business owners in Lagos who manage digital payments. Must be mobile-first and accessible.",
+    "region": "nigeria",
+    "status": "published"
+  },
+  {
+    "briefText": "We need a data analyst to help us make sense of our sales data from the last 2 years. We sell agricultural products across Kenya and want to understand seasonal patterns, customer segments, and optimize our pricing. Data is in spreadsheets and a basic SQL database. We need dashboards we can share with investors.",
+    "region": "kenya",
+    "status": "draft"
+  }
+]

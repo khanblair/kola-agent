@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 120" fill="none">
+  <!-- Modern Abstract Icon representing Agent Matching (Nodes connecting) -->
+  <g transform="translate(10, 10)">
+    <!-- Gradient Definitions -->
+    <defs>
+      <linearGradient id="purpleGradient" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#7C3AED" />
+        <stop offset="100%" stop-color="#4F46E5" />
+      </linearGradient>
+      <linearGradient id="cyanGradient" x1="20" y1="0" x2="100" y2="80" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#06B6D4" />
+        <stop offset="100%" stop-color="#0891B2" />
+      </linearGradient>
+      <linearGradient id="amberGradient" x1="40" y1="20" x2="120" y2="100" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#F59E0B" />
+        <stop offset="100%" stop-color="#D97706" />
+      </linearGradient>
+    </defs>
+
+    <!-- Logo Graphics (Nodes connecting in a K-shape/Infinity motion) -->
+    <circle cx="30" cy="50" r="14" fill="url(#purpleGradient)" />
+    <path d="M30 50 L70 25" stroke="#7C3AED" stroke-width="6" stroke-linecap="round" />
+    <path d="M30 50 L70 75" stroke="#06B6D4" stroke-width="6" stroke-linecap="round" />
+    <path d="M70 25 L100 50" stroke="#F59E0B" stroke-width="6" stroke-linecap="round" />
+    <path d="M70 75 L100 50" stroke="#06B6D4" stroke-width="6" stroke-linecap="round" />
+    
+    <circle cx="70" cy="25" r="12" fill="url(#cyanGradient)" />
+    <circle cx="70" cy="75" r="12" fill="url(#purpleGradient)" />
+    <circle cx="100" cy="50" r="16" fill="url(#amberGradient)" />
+    
+    <!-- Central pulse indicator -->
+    <circle cx="100" cy="50" r="6" fill="#FFFFFF" opacity="0.8" />
+  </g>
+
+  <!-- Typography (Light Mode) -->
+  <text x="140" y="66" fill="#111827" font-family="'Outfit', 'Inter', sans-serif" font-size="42" font-weight="800" letter-spacing="-1">Kola<tspan fill="#7C3AED">Agent</tspan></text>
+  <text x="142" y="88" fill="#6B7280" font-family="'Inter', sans-serif" font-size="12" font-weight="600" letter-spacing="4">BY KOLABORATE</text>
+</svg>
