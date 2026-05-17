@@ -24,6 +24,7 @@ export async function POST(request: NextRequest) {
     const jobId = await mutations.createJob({
       briefText: briefText!,
       region,
+      clerkId: user.clerkId,
     });
 
     return NextResponse.json({ success: true, data: { jobId } });

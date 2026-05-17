@@ -105,14 +105,21 @@ export const getById = query({
 });
 
 export const listByClient = query({
-  args: {},
-  handler: async (ctx) => {
+  args: { clerkId: v.optional(v.string()) },
+  handler: async (ctx, args) => {
+    let subject: string;
     const identity = await ctx.auth.getUserIdentity();
-    if (!identity) return [];
+    if (identity) {
+      subject = identity.subject;
+    } else if (args.clerkId) {
+      subject = args.clerkId;
+    } else {
+      return [];
+    }
 
     const user = await ctx.db
       .query('users')
-      .withIndex('by_clerk_id', (q) => q.eq('clerkId', identity.subject))
+      .withIndex('by_clerk_id', (q) => q.eq('clerkId', subject))
       .first();
 
     if (!user) return [];

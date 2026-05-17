@@ -28,6 +28,7 @@ export async function POST(request: NextRequest) {
     const jobId = await mutations.createJob({
       briefText: briefText!,
       region,
+      clerkId: user.clerkId,
     });
 
     logger.info('Agent run started', {

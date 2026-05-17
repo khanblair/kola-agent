@@ -38,8 +38,8 @@ export function MatchResultsPanel({
           <MatchCard
             key={r.freelancerId}
             ranking={r}
-            profile={profiles?.[r.freelancerId]}
-            name={names?.[r.freelancerId]}
+            profile={profiles?.[r.freelancerId] ?? (r as any).freelancer}
+            name={names?.[r.freelancerId] ?? (r as any).freelancerName}
             selected={selectedId === r.freelancerId}
             onSelect={() => {
               setSelectedId(r.freelancerId);

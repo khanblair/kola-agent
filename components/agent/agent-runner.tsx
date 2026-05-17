@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { AgentLog } from './agent-log';
 import { useAgentStream } from '@/hooks/use-agent-stream';
@@ -20,6 +20,12 @@ export function AgentRunner({ briefText, region, onComplete }: AgentRunnerProps)
     await run(briefText, region);
     if (onComplete) onComplete();
   };
+
+  useEffect(() => {
+    if (briefText.trim() && !hasStarted) {
+      handleRun();
+    }
+  }, [briefText]);
 
   const handleReset = () => {
     reset();

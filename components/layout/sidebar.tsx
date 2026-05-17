@@ -10,6 +10,10 @@ import {
   User,
   FileUp,
   Settings,
+  Mail,
+  Send,
+  Users,
+  Inbox,
 } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
 import type { UserRole } from '@/types/user';
@@ -39,6 +43,30 @@ const navItems: NavItem[] = [
     href: '/dashboard/jobs',
     icon: <Briefcase className="w-5 h-5" />,
     roles: ['client'],
+  },
+  {
+    label: 'Invitations',
+    href: '/client/invitations',
+    icon: <Users className="w-5 h-5" />,
+    roles: ['client'],
+  },
+  {
+    label: 'Applications',
+    href: '/client/applications',
+    icon: <Inbox className="w-5 h-5" />,
+    roles: ['client'],
+  },
+  {
+    label: 'Match Invitations',
+    href: '/freelancer/applications',
+    icon: <Mail className="w-5 h-5" />,
+    roles: ['freelancer'],
+  },
+  {
+    label: 'My Proposals',
+    href: '/freelancer/proposals',
+    icon: <Send className="w-5 h-5" />,
+    roles: ['freelancer'],
   },
   {
     label: 'My Profile',

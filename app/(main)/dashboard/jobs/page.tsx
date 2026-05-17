@@ -16,7 +16,7 @@ export default function MyJobsPage() {
   // Fetch client's jobs in real-time
   const clientJobs = useQuery(
     api.functions.jobs.listByClient,
-    role === 'client' ? {} : 'skip'
+    role === 'client' && user?.id ? { clerkId: user.id } : 'skip'
   );
 
   return (

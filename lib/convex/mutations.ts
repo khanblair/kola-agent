@@ -13,7 +13,7 @@ export async function updateUserRole(clerkId: string, role: 'client' | 'freelanc
   return convex.mutation(api.functions.users.updateRole, { role, clerkId });
 }
 
-export async function createJob(args: { briefText: string; region?: string }) {
+export async function createJob(args: { briefText: string; region?: string; clerkId?: string }) {
   return convex.mutation(api.functions.jobs.create, args);
 }
 
