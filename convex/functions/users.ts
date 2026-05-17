@@ -77,6 +77,8 @@ export const updateNotificationPreference = mutation({
       v.literal('both'),
     ),
     clerkId: v.optional(v.string()),
+    telegramChatId: v.optional(v.string()),
+    whatsappNumber: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
     let clerkId: string;
@@ -96,7 +98,13 @@ export const updateNotificationPreference = mutation({
 
     if (!user) throw new Error('User not found');
 
-    await ctx.db.patch(user._id, { notificationPreference: args.preference });
+    const updates: Record<string, any> = {
+      notificationPreference: args.preference,
+    };
+    if (args.telegramChatId !== undefined) updates.telegramChatId = args.telegramChatId;
+    if (args.whatsappNumber !== undefined) updates.whatsappNumber = args.whatsappNumber;
+
+    await ctx.db.patch(user._id, updates);
     return user._id;
   },
 });
@@ -121,6 +129,7 @@ export const syncUser = mutation({
     email: v.string(),
     name: v.string(),
     imageUrl: v.optional(v.string()),
+    role: v.optional(v.union(v.literal('client'), v.literal('freelancer'))),
   },
   handler: async (ctx, args) => {
     const existing = await ctx.db
@@ -128,13 +137,18 @@ export const syncUser = mutation({
       .withIndex('by_clerk_id', (q) => q.eq('clerkId', args.clerkId))
       .first();
 
-    if (existing) return existing._id;
+    if (existing) {
+      if (args.role && existing.role !== args.role) {
+        await ctx.db.patch(existing._id, { role: args.role });
+      }
+      return existing._id;
+    }
 
     return await ctx.db.insert('users', {
       clerkId: args.clerkId,
       email: args.email,
       name: args.name,
-      role: 'client',
+      role: args.role ?? 'client',
       imageUrl: args.imageUrl,
     });
   },

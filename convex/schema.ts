@@ -15,6 +15,8 @@ export default defineSchema({
         v.literal('both'),
       )
     ),
+    telegramChatId: v.optional(v.string()),
+    whatsappNumber: v.optional(v.string()),
   }).index('by_clerk_id', ['clerkId']),
 
   freelancers: defineTable({

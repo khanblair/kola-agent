@@ -9,6 +9,7 @@ import {
   Briefcase,
   User,
   FileUp,
+  Settings,
 } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
 import type { UserRole } from '@/types/user';
@@ -50,6 +51,12 @@ const navItems: NavItem[] = [
     href: '/freelancer/upload-cv',
     icon: <FileUp className="w-5 h-5" />,
     roles: ['freelancer'],
+  },
+  {
+    label: 'Settings',
+    href: '/settings',
+    icon: <Settings className="w-5 h-5" />,
+    roles: ['client', 'freelancer'],
   },
 ];
 

@@ -114,12 +114,14 @@ export async function logNotification(args: {
 export async function updateNotificationPreference(
   clerkId: string,
   preference: 'telegram' | 'whatsapp' | 'both',
-  _telegramChatId?: string,
-  _whatsappNumber?: string,
+  telegramChatId?: string,
+  whatsappNumber?: string,
 ) {
   return convex.mutation(api.functions.users.updateNotificationPreference, {
     preference,
     clerkId,
+    telegramChatId,
+    whatsappNumber,
   });
 }
 

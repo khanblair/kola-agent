@@ -22,8 +22,9 @@ export function ClerkSync() {
     const email = user.primaryEmailAddress?.emailAddress ?? '';
     const name = user.fullName ?? user.username ?? 'User';
     const imageUrl = user.imageUrl ?? undefined;
+    const role = (user.publicMetadata?.role as any) ?? undefined;
 
-    syncUser({ clerkId: user.id, email, name, imageUrl }).catch(() => {
+    syncUser({ clerkId: user.id, email, name, imageUrl, role }).catch(() => {
       synced.current = false;
     });
   }, [isLoaded, isSignedIn, user, syncUser]);

@@ -76,19 +76,35 @@ export function ContactSetup({ onSubmit, loading }: ContactSetupProps) {
         </div>
       </div>
 
-      <Button
-        onClick={() =>
-          onSubmit({
-            telegramChatId: telegram || undefined,
-            whatsappNumber: whatsapp || undefined,
-            preference,
-          })
-        }
-        loading={loading}
-        className="w-full"
-      >
-        Continue
-      </Button>
+      <div className="flex gap-3">
+        <Button
+          type="button"
+          variant="outline"
+          onClick={() =>
+            onSubmit({
+              preference: 'telegram',
+            })
+          }
+          disabled={loading}
+          className="flex-1"
+        >
+          Skip
+        </Button>
+        <Button
+          type="button"
+          onClick={() =>
+            onSubmit({
+              telegramChatId: telegram || undefined,
+              whatsappNumber: whatsapp || undefined,
+              preference,
+            })
+          }
+          loading={loading}
+          className="flex-1"
+        >
+          Continue
+        </Button>
+      </div>
     </div>
   );
 }

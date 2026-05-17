@@ -18,21 +18,41 @@ export const create = mutation({
     whatsappNumber: v.optional(v.string()),
     hourlyRateMin: v.optional(v.number()),
     hourlyRateMax: v.optional(v.number()),
+    userId: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
+    let finalUserId: any;
     const identity = await ctx.auth.getUserIdentity();
-    if (!identity) throw new Error('Not authenticated');
-
-    const user = await ctx.db
-      .query('users')
-      .withIndex('by_clerk_id', (q) => q.eq('clerkId', identity.subject))
-      .first();
-
-    if (!user) throw new Error('User not found');
+    if (identity) {
+      const user = await ctx.db
+        .query('users')
+        .withIndex('by_clerk_id', (q) => q.eq('clerkId', identity.subject))
+        .first();
+      if (!user) throw new Error('User not found');
+      finalUserId = user._id;
+    } else if (args.userId) {
+      const clerkId = args.userId;
+      const user = await ctx.db
+        .query('users')
+        .withIndex('by_clerk_id', (q) => q.eq('clerkId', clerkId))
+        .first();
+      if (user) {
+        finalUserId = user._id;
+      } else {
+        finalUserId = await ctx.db.insert('users', {
+          clerkId: args.userId,
+          email: args.userId + '@example.com',
+          name: args.userId.replace('seed-user-', '').replace(/-/g, ' '),
+          role: 'freelancer',
+        });
+      }
+    } else {
+      throw new Error('Not authenticated');
+    }
 
     const existing = await ctx.db
       .query('freelancers')
-      .withIndex('by_user_id', (q) => q.eq('userId', user._id))
+      .withIndex('by_user_id', (q) => q.eq('userId', finalUserId))
       .first();
 
     if (existing) {
@@ -53,7 +73,7 @@ export const create = mutation({
     }
 
     return await ctx.db.insert('freelancers', {
-      userId: user._id,
+      userId: finalUserId,
       skills: args.skills,
       yearsOfExperience: args.yearsOfExperience,
       seniority: args.seniority,

@@ -38,6 +38,12 @@ export const sidebarNav: NavItem[] = [
     icon: 'FileUp',
     roles: ['freelancer'],
   },
+  {
+    label: 'Settings',
+    href: '/settings',
+    icon: 'Settings',
+    roles: ['client', 'freelancer'],
+  },
 ];
 
 export const publicNav = [

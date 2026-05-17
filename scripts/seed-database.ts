@@ -8,6 +8,8 @@ import fs from 'fs';
 import path from 'path';
 import { ConvexHttpClient } from 'convex/browser';
 
+import { api } from '../convex/_generated/api';
+
 const CONVEX_URL = process.env.NEXT_PUBLIC_CONVEX_URL;
 if (!CONVEX_URL) {
   console.error('NEXT_PUBLIC_CONVEX_URL is not set');
@@ -35,17 +37,25 @@ async function seed() {
 
   for (const f of freelancers) {
     try {
-      const id = await client.mutation('functions:freelancers:create' as any, {
+      const cvText = `Freelancer Profile: ${f.name}
+Seniority Level: ${f.seniority}
+Years of Experience: ${f.yearsOfExperience} years
+Target Region: ${f.region}
+Skills: ${f.skills.join(', ')}
+
+Notable Projects:
+${f.notableProjects.map((p) => `- ${p}`).join('\n')}`;
+
+      const id = await client.mutation(api.functions.freelancers.create, {
         userId: 'seed-user-' + f.name.toLowerCase().replace(/\s+/g, '-'),
-        name: f.name,
-        email: f.email,
         skills: f.skills,
         yearsOfExperience: f.yearsOfExperience,
-        seniority: f.seniority,
+        seniority: f.seniority as 'junior' | 'mid' | 'senior',
         notableProjects: f.notableProjects,
         region: f.region,
         hourlyRateMin: f.hourlyRateMin,
         hourlyRateMax: f.hourlyRateMax,
+        cvText,
       });
       console.log(`  ✓ ${f.name} → ${id}`);
     } catch (err) {
