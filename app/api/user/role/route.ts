@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
     }
 
     // 1. Update Convex database
-    await mutations.updateUserRole(user.convexUser?._id ?? '', role as UserRole);
+    await mutations.updateUserRole(user.clerkId, role as UserRole);
 
     // 2. Sync Clerk publicMetadata so sidebar/navbar re-render immediately
     const clerk = await clerkClient();

@@ -11,15 +11,13 @@ interface QuickAction {
 }
 
 const clientActions: QuickAction[] = [
-  { label: 'New Job', href: '/dashboard/jobs/new', icon: Briefcase },
-  { label: 'View Matches', href: '/dashboard/matches', icon: FileText },
-  { label: 'Notifications', href: '/dashboard/notifications', icon: Bell },
+  { label: 'New Job', href: '/jobs/new', icon: Briefcase },
+  { label: 'My Jobs', href: '/dashboard/jobs', icon: FileText },
 ];
 
 const freelancerActions: QuickAction[] = [
-  { label: 'Upload CV', href: '/dashboard/profile', icon: Upload },
-  { label: 'My Matches', href: '/dashboard/matches', icon: FileText },
-  { label: 'Notifications', href: '/dashboard/notifications', icon: Bell },
+  { label: 'Upload CV', href: '/freelancer/upload-cv', icon: Upload },
+  { label: 'My Profile', href: '/freelancer/profile', icon: FileText },
 ];
 
 interface QuickActionsProps {

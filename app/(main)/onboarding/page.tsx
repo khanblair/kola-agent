@@ -34,6 +34,9 @@ export default function OnboardingPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ role }),
       });
+      if (user) {
+        await user.reload();
+      }
       setCurrentStep(1);
     } catch {
       // Continue anyway

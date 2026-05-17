@@ -22,7 +22,7 @@ export const sidebarNav: NavItem[] = [
   },
   {
     label: 'My Jobs',
-    href: '/dashboard',
+    href: '/dashboard/jobs',
     icon: 'Briefcase',
     roles: ['client'],
   },

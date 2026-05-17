@@ -9,10 +9,8 @@ export async function getOrCreateUser(args: {
   return convex.mutation(api.functions.users.getOrCreateUser, args);
 }
 
-export async function updateUserRole(convexId: string, role: 'client' | 'freelancer') {
-  // updateRole uses ctx.auth — but ConvexHttpClient doesn't carry Clerk identity
-  // So we patch directly via the user ID
-  return convex.mutation(api.functions.users.updateRole, { role });
+export async function updateUserRole(clerkId: string, role: 'client' | 'freelancer') {
+  return convex.mutation(api.functions.users.updateRole, { role, clerkId });
 }
 
 export async function createJob(args: { briefText: string; region?: string }) {
@@ -114,13 +112,14 @@ export async function logNotification(args: {
 }
 
 export async function updateNotificationPreference(
-  _userId: string,
+  clerkId: string,
   preference: 'telegram' | 'whatsapp' | 'both',
   _telegramChatId?: string,
   _whatsappNumber?: string,
 ) {
   return convex.mutation(api.functions.users.updateNotificationPreference, {
     preference,
+    clerkId,
   });
 }
 

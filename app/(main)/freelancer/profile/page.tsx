@@ -46,7 +46,7 @@ export default function FreelancerProfilePage() {
   const profile = freelancerProfile as any;
 
   return (
-    <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 space-y-6">
+    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 space-y-6">
       <PageHeader
         title="My Profile"
         description="Keep your skills and experience up to date for better matching."

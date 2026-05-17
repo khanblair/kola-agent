@@ -44,14 +44,22 @@ export const getCurrentUser = query({
 export const updateRole = mutation({
   args: {
     role: v.union(v.literal('client'), v.literal('freelancer')),
+    clerkId: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
+    let clerkId: string;
     const identity = await ctx.auth.getUserIdentity();
-    if (!identity) throw new Error('Not authenticated');
+    if (identity) {
+      clerkId = identity.subject;
+    } else if (args.clerkId) {
+      clerkId = args.clerkId;
+    } else {
+      throw new Error('Not authenticated');
+    }
 
     const user = await ctx.db
       .query('users')
-      .withIndex('by_clerk_id', (q) => q.eq('clerkId', identity.subject))
+      .withIndex('by_clerk_id', (q) => q.eq('clerkId', clerkId))
       .first();
 
     if (!user) throw new Error('User not found');
@@ -68,14 +76,22 @@ export const updateNotificationPreference = mutation({
       v.literal('whatsapp'),
       v.literal('both'),
     ),
+    clerkId: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
+    let clerkId: string;
     const identity = await ctx.auth.getUserIdentity();
-    if (!identity) throw new Error('Not authenticated');
+    if (identity) {
+      clerkId = identity.subject;
+    } else if (args.clerkId) {
+      clerkId = args.clerkId;
+    } else {
+      throw new Error('Not authenticated');
+    }
 
     const user = await ctx.db
       .query('users')
-      .withIndex('by_clerk_id', (q) => q.eq('clerkId', identity.subject))
+      .withIndex('by_clerk_id', (q) => q.eq('clerkId', clerkId))
       .first();
 
     if (!user) throw new Error('User not found');

@@ -2,6 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import { useUser } from '@clerk/nextjs';
+import Link from 'next/link';
 import {
   LayoutDashboard,
   PlusCircle,
@@ -34,7 +35,7 @@ const navItems: NavItem[] = [
   },
   {
     label: 'My Jobs',
-    href: '/dashboard',
+    href: '/dashboard/jobs',
     icon: <Briefcase className="w-5 h-5" />,
     roles: ['client'],
   },
@@ -87,10 +88,10 @@ export function Sidebar({ open, onClose }: SidebarProps) {
         <nav className="flex flex-col h-full px-3 py-4">
           <ul className="space-y-1 flex-1">
             {filteredItems.map((item) => {
-              const isActive = pathname === item.href;
+              const isActive = pathname === item.href || (item.href !== '/dashboard' && pathname.startsWith(item.href + '/'));
               return (
                 <li key={item.label}>
-                  <a
+                  <Link
                     href={item.href}
                     onClick={onClose}
                     className={cn(
@@ -108,7 +109,7 @@ export function Sidebar({ open, onClose }: SidebarProps) {
                       {item.icon}
                     </span>
                     {item.label}
-                  </a>
+                  </Link>
                 </li>
               );
             })}

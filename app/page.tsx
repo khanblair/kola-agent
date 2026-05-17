@@ -1,4 +1,6 @@
 import { Show, UserButton } from '@clerk/nextjs';
+import { auth, currentUser } from '@clerk/nextjs/server';
+import { redirect } from 'next/navigation';
 import {
   Search,
   Users,
@@ -38,7 +40,18 @@ const steps = [
   },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const { userId } = await auth();
+
+  if (userId) {
+    const user = await currentUser();
+    if (!user?.publicMetadata?.role) {
+      redirect('/onboarding');
+    } else {
+      redirect('/dashboard');
+    }
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
       {/* ── Nav ── */}
