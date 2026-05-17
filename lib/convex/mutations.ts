@@ -125,7 +125,7 @@ export async function updateNotificationPreference(
 }
 
 export async function updateFreelancerProfile(
-  userId: string,
+  _userId: string,
   data: {
     skills: string[];
     yearsOfExperience: number;
@@ -137,7 +137,12 @@ export async function updateFreelancerProfile(
   },
 ) {
   return convex.mutation(api.functions.freelancers.updateProfile, {
-    userId: userId as any,
-    ...data,
+    skills: data.skills,
+    yearsOfExperience: data.yearsOfExperience,
+    seniority: data.seniority as 'junior' | 'mid' | 'senior',
+    notableProjects: data.notableProjects,
+    region: data.region,
+    hourlyRateMin: data.hourlyRateMin,
+    hourlyRateMax: data.hourlyRateMax,
   });
 }

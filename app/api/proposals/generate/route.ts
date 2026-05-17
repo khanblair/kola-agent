@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { requireUser } from '@/lib/convex/auth';
-import { deepseek } from '@/lib/deepseek/client';
 import { convex, api } from '@/lib/convex/client';
 import { logger } from '@/lib/utils/logger';
 

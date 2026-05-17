@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
       hourlyRateMax?: number;
     };
 
-    await mutations.updateFreelancerProfile(user.convexId, {
+    await mutations.updateFreelancerProfile(user.convexUser?._id ?? '', {
       skills: skills ?? [],
       yearsOfExperience: yearsOfExperience ?? 0,
       seniority: (seniority as any) ?? 'mid',

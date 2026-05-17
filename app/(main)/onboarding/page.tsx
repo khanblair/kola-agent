@@ -70,9 +70,11 @@ export default function OnboardingPage() {
   return (
     <div className="mx-auto max-w-lg px-4 py-8 sm:py-12">
       <div className="mb-8 text-center">
-        <h1 className="text-2xl font-bold text-neutral-900">Welcome to KolaAgent</h1>
-        <p className="mt-1 text-sm text-neutral-500">
-          Let&apos;s set up your account in a few quick steps.
+        <h1 className="text-3xl font-extrabold text-neutral-900 tracking-tight">
+          Welcome to Kola<span className="text-primary-600">Agent</span>
+        </h1>
+        <p className="mt-2 text-sm font-medium text-neutral-400">
+          Let&apos;s set up your profile and preferences in just a few quick steps.
         </p>
       </div>
 
@@ -80,7 +82,7 @@ export default function OnboardingPage() {
         <OnboardingSteps steps={steps} currentStep={currentStep} />
       </div>
 
-      <div className="rounded-xl border border-neutral-200 bg-white p-5 sm:p-6 shadow-sm">
+      <div className="rounded-3xl border border-neutral-100 bg-white p-6 sm:p-8 shadow-2xl shadow-neutral-200/50">
         {currentStep === 0 && (
           <div className="space-y-5">
             <RoleSelector value={role} onChange={setRole} />

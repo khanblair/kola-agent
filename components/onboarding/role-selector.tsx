@@ -13,46 +13,57 @@ const roles: { value: UserRole; label: string; description: string; icon: typeof
   {
     value: 'client',
     label: 'Client',
-    description: 'Post jobs, get matched with freelancers',
+    description: 'Post project briefs, review proposals, and get matched autonomously with elite African freelancers.',
     icon: Briefcase,
   },
   {
     value: 'freelancer',
     label: 'Freelancer',
-    description: 'Showcase skills, get matched to projects',
+    description: 'Showcase your expertise, optimize your local rates, and get connected directly to matching projects.',
     icon: Code,
   },
 ];
 
 export function RoleSelector({ value, onChange }: RoleSelectorProps) {
   return (
-    <div className="space-y-2">
-      <label className="block text-sm font-medium text-neutral-700">
-        I am a...
+    <div className="space-y-4">
+      <label className="block text-xs font-bold uppercase tracking-wider text-neutral-400">
+        Choose your role to get started
       </label>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="flex flex-col gap-4">
         {roles.map((r) => {
           const Icon = r.icon;
+          const isSelected = value === r.value;
           return (
             <button
               key={r.value}
               type="button"
               onClick={() => onChange(r.value)}
               className={cn(
-                'flex flex-col items-center gap-2 rounded-xl border-2 p-5 transition-colors',
-                value === r.value
-                  ? 'border-primary-500 bg-primary-50'
-                  : 'border-neutral-200 bg-white hover:border-neutral-300',
+                'flex items-start gap-4 rounded-2xl border p-5 text-left transition-all duration-300 focus-ring',
+                isSelected
+                  ? 'border-primary-500 bg-primary-50/40 shadow-sm ring-2 ring-primary-500/10 scale-[1.01]'
+                  : 'border-neutral-200 bg-white hover:border-neutral-300 hover:bg-neutral-50/30'
               )}
             >
-              <Icon
+              <div
                 className={cn(
-                  'h-8 w-8',
-                  value === r.value ? 'text-primary-600' : 'text-neutral-400',
+                  'flex h-12 w-12 shrink-0 items-center justify-center rounded-xl transition-all duration-300',
+                  isSelected
+                    ? 'bg-primary-600 text-white shadow-sm'
+                    : 'bg-neutral-100 text-neutral-500'
                 )}
-              />
-              <span className="font-medium text-neutral-800">{r.label}</span>
-              <span className="text-xs text-neutral-500">{r.description}</span>
+              >
+                <Icon className="h-6 w-6" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <span className="block font-bold text-neutral-800 text-base leading-tight">
+                  {r.label}
+                </span>
+                <span className="block mt-1.5 text-sm text-neutral-500 leading-normal">
+                  {r.description}
+                </span>
+              </div>
             </button>
           );
         })}
@@ -60,3 +71,4 @@ export function RoleSelector({ value, onChange }: RoleSelectorProps) {
     </div>
   );
 }
+

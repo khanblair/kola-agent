@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Webhook } from 'svix';
+import { clerkClient } from '@clerk/nextjs/server';
 import * as mutations from '@/lib/convex/mutations';
 import { logger } from '@/lib/utils/logger';
 
@@ -58,6 +59,15 @@ export async function POST(request: NextRequest) {
       name: [firstName, lastName].filter(Boolean).join(' ') || 'User',
       imageUrl,
     });
+
+    // On initial user creation, seed Clerk publicMetadata so the UI
+    // shows a role badge immediately (navbar reads publicMetadata.role)
+    if (eventType === 'user.created') {
+      const clerk = await clerkClient();
+      await clerk.users.updateUser(clerkId, {
+        publicMetadata: { role: 'client' },
+      });
+    }
 
     logger.info('Clerk webhook processed', { eventType, clerkId });
   }

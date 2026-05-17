@@ -19,7 +19,7 @@ export default function JobDetailLoading() {
         <div className="h-px bg-neutral-200" />
         <div className="space-y-2">
           {Array.from({ length: 4 }).map((_, i) => (
-            <div key={i} className="h-4 rounded bg-neutral-100" style={{ width: `${60 + Math.random() * 30}%` }} />
+            <div key={i} className="h-4 rounded bg-neutral-100" style={{ width: `${60 + i * 10}%` }} />
           ))}
         </div>
       </div>

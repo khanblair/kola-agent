@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
     }
 
     await mutations.updateNotificationPreference(
-      user.convexId,
+      user.convexUser?._id ?? '',
       preference as NotificationPreference,
       telegramChatId,
       whatsappNumber,

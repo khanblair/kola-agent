@@ -23,7 +23,7 @@ interface PDFRect {
 export class PDFGenerator {
   private lines: PDFLine[] = [];
   private rects: PDFRect[] = [];
-  private cursorY = spacing.pageMargin;
+  private cursorY: number = spacing.pageMargin;
   private readonly marginX = spacing.pageMargin;
   private readonly contentWidth = page.width - spacing.pageMargin * 2;
 
