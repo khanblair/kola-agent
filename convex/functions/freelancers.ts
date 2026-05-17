@@ -13,6 +13,11 @@ export const create = mutation({
     notableProjects: v.array(v.string()),
     region: v.string(),
     cvText: v.string(),
+    education: v.optional(v.array(v.string())),
+    workHistory: v.optional(v.array(v.string())),
+    certifications: v.optional(v.array(v.string())),
+    volunteerExperience: v.optional(v.array(v.string())),
+    referees: v.optional(v.array(v.string())),
     embedding: v.optional(v.array(v.float64())),
     telegramChatId: v.optional(v.string()),
     whatsappNumber: v.optional(v.string()),
@@ -63,6 +68,11 @@ export const create = mutation({
         notableProjects: args.notableProjects,
         region: args.region,
         cvText: args.cvText,
+        education: args.education,
+        workHistory: args.workHistory,
+        certifications: args.certifications,
+        volunteerExperience: args.volunteerExperience,
+        referees: args.referees,
         embedding: args.embedding,
         telegramChatId: args.telegramChatId,
         whatsappNumber: args.whatsappNumber,
@@ -80,6 +90,11 @@ export const create = mutation({
       notableProjects: args.notableProjects,
       region: args.region,
       cvText: args.cvText,
+      education: args.education,
+      workHistory: args.workHistory,
+      certifications: args.certifications,
+      volunteerExperience: args.volunteerExperience,
+      referees: args.referees,
       embedding: args.embedding,
       telegramChatId: args.telegramChatId,
       whatsappNumber: args.whatsappNumber,
@@ -90,14 +105,21 @@ export const create = mutation({
 });
 
 export const getByUserId = query({
-  args: {},
-  handler: async (ctx) => {
+  args: { clerkId: v.optional(v.string()) },
+  handler: async (ctx, args) => {
+    let subject: string;
     const identity = await ctx.auth.getUserIdentity();
-    if (!identity) return null;
+    if (identity) {
+      subject = identity.subject;
+    } else if (args.clerkId) {
+      subject = args.clerkId;
+    } else {
+      return null;
+    }
 
     const user = await ctx.db
       .query('users')
-      .withIndex('by_clerk_id', (q) => q.eq('clerkId', identity.subject))
+      .withIndex('by_clerk_id', (q) => q.eq('clerkId', subject))
       .first();
 
     if (!user) return null;
@@ -163,6 +185,11 @@ export const updateProfile = mutation({
     ),
     notableProjects: v.optional(v.array(v.string())),
     region: v.optional(v.string()),
+    education: v.optional(v.array(v.string())),
+    workHistory: v.optional(v.array(v.string())),
+    certifications: v.optional(v.array(v.string())),
+    volunteerExperience: v.optional(v.array(v.string())),
+    referees: v.optional(v.array(v.string())),
     telegramChatId: v.optional(v.string()),
     whatsappNumber: v.optional(v.string()),
     hourlyRateMin: v.optional(v.number()),
@@ -194,6 +221,13 @@ export const updateProfile = mutation({
     if (args.notableProjects !== undefined)
       updates.notableProjects = args.notableProjects;
     if (args.region !== undefined) updates.region = args.region;
+    if (args.education !== undefined) updates.education = args.education;
+    if (args.workHistory !== undefined) updates.workHistory = args.workHistory;
+    if (args.certifications !== undefined)
+      updates.certifications = args.certifications;
+    if (args.volunteerExperience !== undefined)
+      updates.volunteerExperience = args.volunteerExperience;
+    if (args.referees !== undefined) updates.referees = args.referees;
     if (args.telegramChatId !== undefined)
       updates.telegramChatId = args.telegramChatId;
     if (args.whatsappNumber !== undefined)

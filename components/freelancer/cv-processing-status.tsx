@@ -24,7 +24,11 @@ function stepIndex(key: Status): number {
 export function CvProcessingStatus({ status, fileName, error }: CvProcessingStatusProps) {
   if (status === 'idle') return null;
 
-  const currentIdx = status === 'error' ? stepIndex('processing') : stepIndex(status);
+  const currentIdx = status === 'complete'
+    ? 3
+    : status === 'error'
+      ? stepIndex('processing')
+      : stepIndex(status);
 
   return (
     <div className="space-y-3">

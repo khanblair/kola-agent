@@ -84,11 +84,17 @@ export async function createFreelancer(args: {
   notableProjects: string[];
   region: string;
   cvText: string;
+  education?: string[];
+  workHistory?: string[];
+  certifications?: string[];
+  volunteerExperience?: string[];
+  referees?: string[];
   embedding?: number[];
   telegramChatId?: string;
   whatsappNumber?: string;
   hourlyRateMin?: number;
   hourlyRateMax?: number;
+  userId?: string;
 }) {
   return convex.mutation(api.functions.freelancers.create, args);
 }
@@ -133,6 +139,11 @@ export async function updateFreelancerProfile(
     seniority: string;
     notableProjects: string[];
     region: string;
+    education?: string[];
+    workHistory?: string[];
+    certifications?: string[];
+    volunteerExperience?: string[];
+    referees?: string[];
     hourlyRateMin?: number;
     hourlyRateMax?: number;
   },
@@ -143,6 +154,11 @@ export async function updateFreelancerProfile(
     seniority: data.seniority as 'junior' | 'mid' | 'senior',
     notableProjects: data.notableProjects,
     region: data.region,
+    education: data.education,
+    workHistory: data.workHistory,
+    certifications: data.certifications,
+    volunteerExperience: data.volunteerExperience,
+    referees: data.referees,
     hourlyRateMin: data.hourlyRateMin,
     hourlyRateMax: data.hourlyRateMax,
   });

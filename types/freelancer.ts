@@ -7,6 +7,11 @@ export interface FreelancerProfile {
   notableProjects: string[];
   region: string;
   cvText: string;
+  education?: string[];
+  workHistory?: string[];
+  certifications?: string[];
+  volunteerExperience?: string[];
+  referees?: string[];
   embedding?: number[];
   telegramChatId?: string;
   whatsappNumber?: string;
@@ -21,4 +26,9 @@ export interface CVParseResult {
   seniority: Seniority;
   notableProjects: string[];
   region: string;
+  education?: string[];
+  workHistory?: string[];
+  certifications?: string[];
+  volunteerExperience?: string[];
+  referees?: string[];
 }

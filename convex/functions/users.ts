@@ -119,6 +119,13 @@ export const getUserByClerkId = query({
   },
 });
 
+export const getById = query({
+  args: { id: v.id('users') },
+  handler: async (ctx, args) => {
+    return await ctx.db.get(args.id);
+  },
+});
+
 // Client-side sync: called from <ClerkSync /> on every sign-in.
 // Takes clerkId from the Clerk useUser() hook so it works with the
 // plain ConvexProvider (no Clerk JWT needed for the sync path).

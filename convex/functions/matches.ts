@@ -96,14 +96,21 @@ export const getByJob = query({
 });
 
 export const getByFreelancer = query({
-  args: {},
-  handler: async (ctx) => {
+  args: { clerkId: v.optional(v.string()) },
+  handler: async (ctx, args) => {
+    let subject: string;
     const identity = await ctx.auth.getUserIdentity();
-    if (!identity) return [];
+    if (identity) {
+      subject = identity.subject;
+    } else if (args.clerkId) {
+      subject = args.clerkId;
+    } else {
+      return [];
+    }
 
     const user = await ctx.db
       .query('users')
-      .withIndex('by_clerk_id', (q) => q.eq('clerkId', identity.subject))
+      .withIndex('by_clerk_id', (q) => q.eq('clerkId', subject))
       .first();
 
     if (!user) return [];
@@ -130,6 +137,63 @@ export const getByFreelancer = query({
           ...match,
           job,
           clientName: client?.name ?? 'Unknown',
+        };
+      }),
+    );
+
+    return enriched.sort((a, b) => b.score - a.score);
+  },
+});
+
+export const getByClient = query({
+  args: { clerkId: v.optional(v.string()) },
+  handler: async (ctx, args) => {
+    let subject: string;
+    const identity = await ctx.auth.getUserIdentity();
+    if (identity) {
+      subject = identity.subject;
+    } else if (args.clerkId) {
+      subject = args.clerkId;
+    } else {
+      return [];
+    }
+
+    const user = await ctx.db
+      .query('users')
+      .withIndex('by_clerk_id', (q) => q.eq('clerkId', subject))
+      .first();
+
+    if (!user) return [];
+
+    const jobs = await ctx.db
+      .query('jobs')
+      .withIndex('by_client_id', (q) => q.eq('clientId', user._id))
+      .collect();
+
+    if (jobs.length === 0) return [];
+
+    const jobIds = new Set(jobs.map((j) => j._id));
+
+    const allMatches = await ctx.db.query('matches').collect();
+    const clientMatches = allMatches.filter((m) => jobIds.has(m.jobId));
+
+    const enriched = await Promise.all(
+      clientMatches.map(async (match) => {
+        const job = jobs.find((j) => j._id === match.jobId);
+        const freelancer = await ctx.db.get(match.freelancerId);
+        const freelancerUser = freelancer
+          ? await ctx.db.get(freelancer.userId)
+          : null;
+
+        return {
+          ...match,
+          job,
+          freelancerName: freelancerUser?.name ?? 'Unknown',
+          freelancerEmail: freelancerUser?.email ?? '',
+          freelancerImage: freelancerUser?.imageUrl ?? '',
+          freelancerSkills: freelancer?.skills ?? [],
+          freelancerExperience: freelancer?.yearsOfExperience ?? 0,
+          freelancerSeniority: freelancer?.seniority ?? 'mid',
         };
       }),
     );

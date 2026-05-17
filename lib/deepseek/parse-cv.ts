@@ -10,9 +10,15 @@ Return a JSON object with exactly these fields:
 - seniority: "junior" | "mid" | "senior" (based on years and complexity of work)
 - notableProjects: string[] (1-3 sentence descriptions of the most impressive projects)
 - region: string (detected country or "east-africa" as default)
+- education: string[] (list of education degrees, certificates and institutions in format "Degree/Course, Institution (Years)" - extract UACE, UCE, and BSc details)
+- workHistory: string[] (list of past job titles, companies, and timelines in format "Role, Company (Timeline)")
+- certifications: string[] (list of licenses, courses, and certifications in format "Certification - Academy")
+- volunteerExperience: string[] (list of leadership or volunteer experiences in format "Role - Description")
+- referees: string[] (list of professional references with details in format "Name (Role, Organization) - Contact information")
 
 Rules:
 - Infer seniority: 0-2 years = junior, 3-5 years = mid, 6+ years = senior
+- Calculate yearsOfExperience as the total active span between their earliest software engineering role, development project, or active coding activity and the present day (assume the current year is 2026). Do NOT simply sum isolated, non-overlapping months of employment. For example, if a candidate has projects or work starting in 2022 and the current year is 2026, return 4.
 - If region is ambiguous, use "uganda" as default
 - Extract only real, verifiable skills mentioned in the CV
 - Project descriptions should be concise (one sentence each)
@@ -45,6 +51,11 @@ export async function parseCV(cvText: string): Promise<CVParseResult> {
       ? parsed.notableProjects
       : [],
     region: parsed.region ?? 'uganda',
+    education: Array.isArray(parsed.education) ? parsed.education : [],
+    workHistory: Array.isArray(parsed.workHistory) ? parsed.workHistory : [],
+    certifications: Array.isArray(parsed.certifications) ? parsed.certifications : [],
+    volunteerExperience: Array.isArray(parsed.volunteerExperience) ? parsed.volunteerExperience : [],
+    referees: Array.isArray(parsed.referees) ? parsed.referees : [],
   };
 }
 

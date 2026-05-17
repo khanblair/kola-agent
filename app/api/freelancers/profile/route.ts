@@ -7,12 +7,30 @@ export async function POST(request: NextRequest) {
     const user = await requireUser();
 
     const body = await request.json();
-    const { skills, yearsOfExperience, seniority, notableProjects, region, hourlyRateMin, hourlyRateMax } = body as {
+    const {
+      skills,
+      yearsOfExperience,
+      seniority,
+      notableProjects,
+      region,
+      education,
+      workHistory,
+      certifications,
+      volunteerExperience,
+      referees,
+      hourlyRateMin,
+      hourlyRateMax,
+    } = body as {
       skills?: string[];
       yearsOfExperience?: number;
       seniority?: string;
       notableProjects?: string[];
       region?: string;
+      education?: string[];
+      workHistory?: string[];
+      certifications?: string[];
+      volunteerExperience?: string[];
+      referees?: string[];
       hourlyRateMin?: number;
       hourlyRateMax?: number;
     };
@@ -23,6 +41,11 @@ export async function POST(request: NextRequest) {
       seniority: (seniority as any) ?? 'mid',
       notableProjects: notableProjects ?? [],
       region: region ?? 'uganda',
+      education,
+      workHistory,
+      certifications,
+      volunteerExperience,
+      referees,
       hourlyRateMin,
       hourlyRateMax,
     });

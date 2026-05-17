@@ -38,6 +38,7 @@ export async function POST(request: NextRequest) {
       notableProjects: parsed.notableProjects,
       region: parsed.region,
       cvText,
+      userId: user.clerkId,
     });
 
     return NextResponse.json({
