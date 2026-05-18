@@ -1,113 +1,212 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# KolaAgent
 
-## Getting Started
+KolaAgent is a full-stack Next.js application for running an AI-assisted freelance proposal workflow for the African market. A client submits a job brief, the app runs an autonomous agent loop, stores results in Convex, and presents matches, proposals, notifications, and PDF-ready output in the UI.
 
-First, run the development server:
+## What Is Implemented
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Clerk authentication with protected routes and role-based onboarding
+- Convex-backed data model for users, freelancers, jobs, matches, and notifications
+- Client flow for submitting a job brief and watching the agent run over Server-Sent Events
+- Agent tools for:
+  - market-rate research
+  - brief structuring
+  - freelancer matching
+  - candidate scoring
+  - proposal generation
+  - stakeholder notification
+  - PDF export preparation
+- Freelancer flow for CV upload, CV parsing, and profile editing
+- Dashboard views for both client and freelancer roles
+- Notification helpers for Telegram and WhatsApp
+- Client-side PDF export flow fed by server-prepared data
+
+## Current Stack
+
+- Next.js 16 App Router
+- React 19
+- TypeScript
+- Tailwind CSS 4
+- Clerk for authentication
+- Convex for database, queries, mutations, and vector indexes
+- DeepSeek via the OpenAI SDK-compatible client
+- Tavily for market-rate search grounding
+
+## How The App Works
+
+1. A user signs in with Clerk.
+2. The user is synced into Convex and chooses a role during onboarding.
+3. A client posts a brief from `/jobs/new`.
+4. The frontend calls `POST /api/agent/run`.
+5. `lib/agent/loop.ts` runs the tool-calling workflow and streams progress back to the browser.
+6. Tool results are persisted into Convex as jobs, matches, proposals, and notifications.
+7. The UI surfaces results in dashboards, job pages, match pages, and proposal pages.
+
+## Important Implementation Notes
+
+- The agent is currently implemented with `DeepSeek`, not Anthropic/Claude.
+- The `export_pdf` tool prepares structured PDF data. The actual PDF rendering happens client-side.
+- Convex vector indexes exist in the schema, but the main matching tool currently uses a simpler text/keyword fallback path when fetching candidates.
+- The agent notification tool logs the requested channel but currently sends through the Telegram helper used for testing.
+
+## Project Structure
+
+```text
+app/
+  (auth)/                Clerk sign-in and sign-up routes
+  (main)/                Protected product pages
+  api/                   Backend API routes
+components/              UI components by product area
+convex/                  Schema plus queries, mutations, and actions
+data/seed/               Demo freelancer data
+docs/                    Setup and project documentation
+hooks/                   Client hooks, including SSE agent streaming
+lib/
+  agent/                 Agent prompt, tools, loop, executor, and SSE stream
+  convex/                Client/auth/query/mutation helpers
+  deepseek/              LLM client, CV parsing, embeddings
+  notifications/         Telegram and WhatsApp adapters
+  pdf/                   PDF templates and generators
+  rate-card/             Built-in regional fallback rates
+  tavily/                Market-search integration
+  tools/                 Agent tool implementations
+types/                   Shared application types
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Main Routes
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Product Pages
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `/` landing page
+- `/onboarding` role and contact setup
+- `/dashboard` main role-aware dashboard
+- `/jobs/new` submit a new client brief and run the agent
+- `/jobs/[jobId]` job details
+- `/matches/[matchId]` match details
+- `/proposals/[proposalId]` proposal details
+- `/freelancer/upload-cv` freelancer CV upload
+- `/freelancer/profile` freelancer profile management
+- `/settings` user settings
 
-## Learn More
+### API Routes
 
-To learn more about Next.js, take a look at the following resources:
+- `POST /api/agent/run`
+- `POST /api/cv/upload`
+- `POST /api/cv/parse`
+- `POST /api/freelancers/upload-cv`
+- `POST /api/freelancers/profile`
+- `POST /api/jobs/create`
+- `POST /api/jobs/publish`
+- `POST /api/matches/fetch`
+- `POST /api/proposals/generate`
+- `POST /api/pdf/export`
+- `POST /api/notify/telegram`
+- `POST /api/notify/whatsapp`
+- `POST /api/embeddings/generate`
+- `POST /api/user/role`
+- `POST /api/user/notification-preference`
+- `POST /api/webhooks/clerk`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Environment Variables
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Required to boot the core app:
 
-## Deploy on Vercel
+- `DEEPSEEK_API_KEY`
+- `NEXT_PUBLIC_CONVEX_URL`
+- `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
+- `CLERK_SECRET_KEY`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Also used by implemented features:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `CLERK_WEBHOOK_SECRET`
+- `TAVILY_API_KEY`
+- `TELEGRAM_BOT_TOKEN`
+- `TELEGRAM_TEST_CHAT_ID`
+- `WPPCONNECT_SESSION_NAME`
+- `WPPCONNECT_PORT`
+- `NEXT_PUBLIC_APP_URL`
+- `NEXT_PUBLIC_APP_NAME`
 
+Use `.env.example` as the starting point for `.env.local`.
 
+## Local Development
 
-development phase 
+This repo already includes a `bun.lock`, so Bun is the smoothest path locally.
 
-Here's the build order based on dependency chains — each phase unlocks the next.
+```bash
+bun install
+cp .env.example .env.local
+```
 
-  ---
-  Phase 1 — App Shell & Auth (everything renders inside this)
-  1. app/layout.tsx — root layout with ClerkProvider, ConvexProvider, globals
-  2. app/globals.css — Tailwind base styles
-  3. app/(auth)/layout.tsx — centered auth layout
-  4. app/(auth)/sign-in/[[...sign-in]]/page.tsx — Clerk <SignIn />
-  5. app/(auth)/sign-up/[[...sign-up]]/page.tsx — Clerk <SignUp />
-  6. app/(main)/layout.tsx — protected layout with navbar/sidebar
-  7. app/page.tsx — landing page
+Run Convex in one terminal:
 
-  Phase 2 — Lib Foundation (everything else imports from these)
-  8. lib/convex/client.ts — Convex provider helper
-  9. lib/convex/auth.ts — requireUser helper
-  10. lib/deepseek/client.ts — DeepSeek/OpenAI SDK singleton
-  11. lib/rate-card/index.ts + regions.ts + adjuster.ts — fallback rates
+```bash
+bunx convex dev
+```
 
-  Phase 3 — Agent Brain (the core — build this before any UI works)
-  12. lib/agent/types.ts — AgentStep, ToolCall types
-  13. lib/agent/prompt.ts — system prompt builder
-  14. lib/agent/tools.ts — tool schema definitions (6 tools)
-  15. lib/tavily/client.ts + search.ts + parser.ts — web search
-  16. lib/tools/search-market-rates.ts — tool 1
-  17. lib/tools/structure-brief.ts — tool 2
-  18. lib/tools/fetch-matched-freelancers.ts — tool 3
-  19. lib/tools/score-candidate.ts — tool 4
-  20. lib/tools/write-proposal.ts — tool 5
-  21. lib/tools/notify-stakeholder.ts — tool 6
-  22. lib/tools/export-pdf.ts — tool 7
-  23. lib/agent/executor.ts — routes tool calls to implementations
-  24. lib/agent/stream.ts — SSE streaming helper
-  25. lib/agent/loop.ts — the main while(true) tool-calling loop
+Run Next.js in another terminal:
 
-  Phase 4 — Agent API Route (connects the brain to the frontend)
-  26. app/api/agent/run/route.ts — the endpoint that triggers everything
+```bash
+bun run dev
+```
 
-  Phase 5 — Core UI Components (the 3 screens judges see)
-  27. components/ui/* — base design system (button, input, card, badge, etc.)
-  28. components/layout/navbar.tsx + sidebar.tsx + page-header.tsx
-  29. components/agent/agent-log.tsx + agent-log-item.tsx + agent-tool-icon.tsx + agent-status-badge.tsx
-  30. components/agent/agent-runner.tsx — orchestrates the full run
-  31. hooks/use-agent-stream.ts — SSE stream consumer
-  32. components/jobs/brief-input.tsx — job input textarea
-  33. components/matching/match-card.tsx + match-results-panel.tsx + match-score-ring.tsx
-  34. components/proposals/proposal-preview.tsx + tone-selector.tsx
-  35. components/jobs/scope-card.tsx + budget-breakdown.tsx
+Open [http://localhost:3000](http://localhost:3000).
 
-  Phase 6 — App Pages (wire components into routes)
-  36. app/(main)/onboarding/page.tsx — role selection
-  37. app/(main)/dashboard/page.tsx — client/freelancer dashboard
-  38. app/(main)/jobs/new/page.tsx — post a job + run agent
-  39. app/(main)/jobs/[jobId]/page.tsx — job detail with results
+## Seed Demo Freelancers
 
-  Phase 7 — Notifications & PDF (Day 5 features)
-  40. lib/notifications/templates.ts + telegram.ts + dispatcher.ts
-  41. lib/pdf/styles.ts + generator.ts + scope-report.ts + proposal-doc.ts
-  42. components/pdf/export-button.tsx
-  43. components/notifications/notification-banner.tsx
+To populate Convex with demo freelancer profiles from `data/seed/freelancers.json`:
 
-  Phase 8 — CV Pipeline (freelancer side)
-  44. lib/deepseek/embeddings.ts + parse-cv.ts + rate-limiter.ts
-  45. app/api/cv/upload/route.ts + cv/parse/route.ts
-  46. components/freelancer/cv-upload-zone.tsx + profile-card.tsx + profile-editor.tsx
-  47. app/(main)/freelancer/upload-cv/page.tsx + profile/page.tsx
+```bash
+bun run scripts/seed-database.ts
+```
 
-  Phase 9 — Remaining Pages & Polish
-  48. app/(main)/matches/[matchId]/page.tsx + proposals/[proposalId]/page.tsx
-  49. Remaining dashboard components, remaining job/market/notification components
-  50. scripts/seed-database.ts — seed the 5 demo profiles
-  51. app/loading.tsx + app/error.tsx + app/not-found.tsx
+## Useful Commands
 
+```bash
+# start the Next.js app
+bun run dev
+
+# build for production
+bun run build
+
+# start the production server
+bun run start
+
+# run linting
+bun run lint
+
+# seed demo freelancer data
+bun run scripts/seed-database.ts
+```
+
+## Data Model Snapshot
+
+The main Convex tables are:
+
+- `users` for Clerk-linked accounts and notification preferences
+- `freelancers` for profile data, CV-derived fields, and optional embeddings
+- `jobs` for submitted briefs, structured scope, status, and market-rate data
+- `matches` for candidate scoring, proposal content, and recommendation status
+- `notifications` for delivery logs tied to jobs and matches
+
+## Current MVP Boundaries
+
+- The LLM runtime is wired to DeepSeek today, even though some earlier planning docs referenced Claude
+- Matching support exists in the schema for vector search, but the main runtime path still relies on simpler scoring logic in the matching tool
+- PDF export is a packaged data flow plus client-side rendering, not a server-side PDF generation pipeline
+- Notification routing supports Telegram and WhatsApp at the app level, but the agent tool currently uses the Telegram testing helper for delivery attempts
+
+## Related Docs
+
+- `docs/SETUP-GUIDE.md` explains the implemented architecture in more detail
+- `.env.example` lists the environment variables used by the app
+- `data/seed/freelancers.json` contains the demo freelancer dataset used for local seeding
+
+## Key Files
+
+- `app/api/agent/run/route.ts` starts the agent workflow
+- `lib/agent/loop.ts` runs the tool-calling loop
+- `lib/agent/executor.ts` dispatches tool calls to implementations
+- `lib/tools/*` contains the actual tool logic
+- `convex/schema.ts` defines the stored data model
+- `components/agent/agent-runner.tsx` and `hooks/use-agent-stream.ts` power the live UI stream
+- `docs/SETUP-GUIDE.md` contains a deeper implementation-oriented guide
