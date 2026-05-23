@@ -16,7 +16,6 @@ out/
 build/
 
 # Convex generated files
-convex/_generated/
 
 # WPPConnect session data — contains WhatsApp auth tokens
 .wppconnect/
