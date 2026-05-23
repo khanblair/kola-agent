@@ -1,5 +1,7 @@
 # KolaAgent
 
+**🚀 Live Demo:** [https://kola-agent.vercel.app/](https://kola-agent.vercel.app/)
+
 KolaAgent is a full-stack Next.js application for running an AI-assisted freelance proposal workflow for the African market. A client submits a job brief, the app runs an autonomous agent loop, stores results in Convex, and presents matches, proposals, notifications, and PDF-ready output in the UI.
 
 ## What Is Implemented
