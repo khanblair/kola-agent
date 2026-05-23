@@ -1,6 +1,7 @@
 import { Show, UserButton } from '@clerk/nextjs';
 import { auth, currentUser } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
+import Link from 'next/link';
 import {
   Search,
   Users,
@@ -68,36 +69,36 @@ export default async function Home() {
 
           <div className="flex items-center gap-3">
             <Show when="signed-in">
-              <a
+              <Link
                 href="/dashboard"
                 className="hidden sm:inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-primary-600 text-white hover:bg-primary-700 transition-colors"
               >
                 Dashboard
                 <ArrowRight className="w-4 h-4" />
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/dashboard"
                 className="sm:hidden p-2 rounded-lg bg-primary-600 text-white"
                 aria-label="Dashboard"
               >
                 <ArrowRight className="w-5 h-5" />
-              </a>
+              </Link>
               <UserButton />
             </Show>
 
             <Show when="signed-out">
-              <a
+              <Link
                 href="/sign-in"
                 className="px-4 py-2 text-sm font-medium rounded-lg text-foreground-muted hover:text-foreground hover:bg-neutral-100 transition-colors"
               >
                 Sign In
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/sign-up"
                 className="px-4 py-2 text-sm font-medium rounded-lg bg-primary-600 text-white hover:bg-primary-700 transition-colors"
               >
                 Get Started
-              </a>
+              </Link>
             </Show>
           </div>
         </div>
@@ -123,29 +124,29 @@ export default async function Home() {
 
         <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center gap-3">
           <Show when="signed-out">
-            <a
+            <Link
               href="/sign-up"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold rounded-xl bg-primary-600 text-white hover:bg-primary-700 transition-colors shadow-md"
             >
               Try KolaAgent
               <ArrowRight className="w-4 h-4" />
-            </a>
+            </Link>
           </Show>
           <Show when="signed-in">
-            <a
+            <Link
               href="/dashboard"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold rounded-xl bg-primary-600 text-white hover:bg-primary-700 transition-colors shadow-md"
             >
               Go to Dashboard
               <ArrowRight className="w-4 h-4" />
-            </a>
+            </Link>
           </Show>
-          <a
+          <Link
             href="#how-it-works"
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-medium rounded-xl border border-border text-foreground-muted hover:text-foreground hover:border-border-hover transition-colors"
           >
             See how it works
-          </a>
+          </Link>
         </div>
       </section>
 
@@ -232,22 +233,22 @@ export default async function Home() {
           </p>
           <div className="mt-8">
             <Show when="signed-out">
-              <a
+              <Link
                 href="/sign-up"
                 className="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded-xl bg-white text-primary-700 hover:bg-primary-50 transition-colors shadow-lg"
               >
                 Get Started Free
                 <ArrowRight className="w-4 h-4" />
-              </a>
+              </Link>
             </Show>
             <Show when="signed-in">
-              <a
+              <Link
                 href="/jobs/new"
                 className="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded-xl bg-white text-primary-700 hover:bg-primary-50 transition-colors shadow-lg"
               >
                 Post a Job Brief
                 <ArrowRight className="w-4 h-4" />
-              </a>
+              </Link>
             </Show>
           </div>
         </div>

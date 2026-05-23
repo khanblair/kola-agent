@@ -18,6 +18,7 @@ export function ProposalEditor({ initialContent, tone, onSave }: ProposalEditorP
   const debounced = useDebounce(content, 300);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setContent(initialContent);
   }, [initialContent]);
 

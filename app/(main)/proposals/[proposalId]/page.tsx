@@ -33,9 +33,11 @@ export default function ProposalDetailPage() {
   // Initialize content if match already has an existing proposal
   useEffect(() => {
     if (match?.proposalText) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setContent(match.proposalText);
     }
     if (match?.proposalTone) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setTone(match.proposalTone as ProposalTone);
     }
   }, [match]);

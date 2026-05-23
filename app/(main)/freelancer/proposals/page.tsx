@@ -110,7 +110,7 @@ export default function MyProposalsPage() {
           <div className="space-y-1">
             <h3 className="font-semibold text-neutral-800 text-base">No proposals found</h3>
             <p className="text-sm text-neutral-500">
-              Go to "Match Invitations" to submit a pitch for matches.
+              Go to &quot;Match Invitations&quot; to submit a pitch for matches.
             </p>
           </div>
         </div>

@@ -23,8 +23,10 @@ export function AgentRunner({ briefText, region, onComplete }: AgentRunnerProps)
 
   useEffect(() => {
     if (briefText.trim() && !hasStarted) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       handleRun();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [briefText]);
 
   const handleReset = () => {

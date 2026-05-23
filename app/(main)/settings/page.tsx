@@ -38,6 +38,7 @@ export default function SettingsPage() {
   // Sync state when convex user loaded
   useEffect(() => {
     if (convexUser) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setTelegram(convexUser.telegramChatId ?? '');
       setWhatsapp(convexUser.whatsappNumber ?? '');
       setPreference((convexUser.notificationPreference as NotificationPreference) ?? 'telegram');
